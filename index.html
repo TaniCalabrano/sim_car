@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<!-- saved from url=(0185)file:///C:/Users/tanic/AppData/Local/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalState/sessions/3281577FF4F5D3E9DC1EA81DCED402E00A8501AB/transfers/2026-26/car_t_simulacion.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador CAR-T vs Leucemia</title>
+  <script src="./index_files/chart.umd.js.descarga"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #111214;
+      color: #e2e0dc;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #f0ede8;
+      letter-spacing: 0.01em;
+    }
+    header p {
+      font-size: 12px;
+      color: #7a7874;
+      margin-top: 4px;
+    }
+
+    .wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 720px) {
+      .wrap { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: #1c1e21;
+      border: 0.5px solid #2e3035;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .panel-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      color: #7a7874;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .sl-block {
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 0.5px solid #2e3035;
+    }
+    .sl-block:last-of-type { border-bottom: none; margin-bottom: 0; }
+
+    .sl-top {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      margin-bottom: 2px;
+    }
+    .sl-name { font-size: 12px; font-weight: 500; color: #e2e0dc; }
+    .sl-sym  { font-size: 11px; color: #6b9cf0; }
+    .sl-desc { font-size: 10px; color: #7a7874; margin-bottom: 5px; line-height: 1.4; }
+
+    .sl-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input[type=range] {
+      flex: 1;
+      min-width: 0;
+      accent-color: #6b9cf0;
+      height: 4px;
+      cursor: pointer;
+    }
+
+    .sl-val-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      min-width: 76px;
+    }
+    .sl-val  { font-size: 12px; font-weight: 500; color: #e2e0dc; white-space: nowrap; }
+    .sl-unit { font-size: 9px;  color: #7a7874;   white-space: nowrap; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .metric {
+      background: #141618;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .metric-label { font-size: 10px; color: #7a7874; margin-bottom: 3px; }
+    .metric-val   { font-size: 15px; font-weight: 500; }
+    .metric-val.red  { color: #e24b4a; }
+    .metric-val.blue { color: #4a90d9; }
+
+    .status-wrap { margin-top: 14px; }
+    .status-label { font-size: 10px; color: #7a7874; margin-bottom: 4px; }
+    .status-bar   { height: 4px; border-radius: 2px; background: #2e3035; }
+    .status-fill  { height: 100%; border-radius: 2px; transition: width .3s, background .3s; }
+
+    .eq-box {
+      background: #141618;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-top: 14px;
+      font-size: 11px;
+      color: #a0a89e;
+      line-height: 2;
+      font-family: 'Courier New', monospace;
+    }
+    .eq-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      color: #7a7874;
+      margin-bottom: 4px;
+      letter-spacing: .05em;
+    }
+
+    .reset-btn {
+      width: 100%;
+      margin-top: 14px;
+      padding: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: 0.5px solid #3a3d44;
+      background: transparent;
+      color: #c8c5bf;
+      transition: background .2s;
+    }
+    .reset-btn:hover { background: #23262b; }
+
+    .legend {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #a0a89e;
+    }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      height: 300px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 10px;
+      color: #4a4845;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Simulador: Dinámica CAR-T vs Leucemia</h1>
+  <p>Modelo simplificado sin células B · Universidad del Bío-Bío · Ecuaciones Diferenciales 2026</p>
+</header>
+
+<div class="wrap">
+
+  <!-- Panel izquierdo: controles -->
+  <div class="panel">
+    <div class="panel-title">— Parámetros del modelo</div>
+
+    <div class="sl-block">
+      <div class="sl-top">
+        <span class="sl-name">Tasa de crecimiento leucémico</span>
+        <span class="sl-sym">(ρ_L)</span>
+      </div>
+      <div class="sl-desc">Qué tan rápido se multiplican las células leucémicas por día</div>
+      <div class="sl-row">
+        <input type="range" id="rhoL" min="0.05" max="0.50" step="0.01" value="0.20">
+        <div class="sl-val-wrap">
+          <div class="sl-val" id="rhoL-v">0.20</div>
+          <div class="sl-unit">día⁻¹</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-block">
+      <div class="sl-top">
+        <span class="sl-name">Eficiencia de eliminación CAR-T</span>
+        <span class="sl-sym">(α)</span>
+      </div>
+      <div class="sl-desc">Capacidad de las CAR-T para destruir células leucémicas por encuentro</div>
+      <div class="sl-row">
+        <input type="range" id="alpha" min="0.2" max="5.0" step="0.1" value="1.0">
+        <div class="sl-val-wrap">
+          <div class="sl-val" id="alpha-v">2.2</div>
+          <div class="sl-unit">×10⁻¹¹ cél⁻¹día⁻¹</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-block">
+      <div class="sl-top">
+        <span class="sl-name">Estimulación de las CAR-T</span>
+        <span class="sl-sym">(ρ_C)</span>
+      </div>
+      <div class="sl-desc">Con qué fuerza la leucemia activa y multiplica las células CAR-T</div>
+      <div class="sl-row">
+        <input type="range" id="rhoC" min="0.2" max="5.0" step="0.1" value="1.0">
+        <div class="sl-val-wrap">
+          <div class="sl-val" id="rhoC-v">3.1</div>
+          <div class="sl-unit">×10⁻¹¹ cél⁻¹día⁻¹</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-block">
+      <div class="sl-top">
+        <span class="sl-name">Vida media de las CAR-T</span>
+        <span class="sl-sym">(τ_C)</span>
+      </div>
+      <div class="sl-desc">Tiempo promedio que sobreviven las células CAR-T en el organismo</div>
+      <div class="sl-row">
+        <input type="range" id="tauC" min="7" max="60" step="1" value="20">
+        <div class="sl-val-wrap">
+          <div class="sl-val" id="tauC-v">36</div>
+          <div class="sl-unit">días</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-block">
+      <div class="sl-top">
+        <span class="sl-name">Carga tumoral inicial</span>
+        <span class="sl-sym">(L₀)</span>
+      </div>
+      <div class="sl-desc">Número de células leucémicas al inicio del tratamiento</div>
+      <div class="sl-row">
+        <input type="range" id="L0" min="0.5" max="15" step="0.5" value="5">
+        <div class="sl-val-wrap">
+          <div class="sl-val" id="L0-v">5.0</div>
+          <div class="sl-unit">×10¹⁰ células</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-block">
+      <div class="sl-top">
+        <span class="sl-name">Dosis inicial de CAR-T</span>
+        <span class="sl-sym">(C₀)</span>
+      </div>
+      <div class="sl-desc">Cantidad de células CAR-T infundidas al paciente al día 0</div>
+      <div class="sl-row">
+        <input type="range" id="C0" min="0.5" max="20" step="0.5" value="5">
+        <div class="sl-val-wrap">
+          <div class="sl-val" id="C0-v">5.0</div>
+          <div class="sl-unit">×10⁷ células</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="reset-btn" onclick="resetSliders()">Resetear valores</button>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">L(t) al día 30</div>
+        <div class="metric-val red" id="Lfin">&lt; 1 cél (elim.)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">C(t) al día 30</div>
+        <div class="metric-val blue" id="Cfin">6.9×10¹⁰ cél</div>
+      </div>
+    </div>
+
+    <div class="status-wrap">
+      <div class="status-label" id="outcome-label">Respuesta completa: la leucemia fue eliminada</div>
+      <div class="status-bar">
+        <div class="status-fill" id="outcome-bar" style="width: 100%; background: rgb(27, 175, 122);"></div>
+      </div>
+    </div>
+
+    <div class="eq-box">
+      <div class="eq-title">ECUACIONES DEL MODELO</div>
+      dL/dt = ρ_L · L − α · C · L<br>
+      dC/dt = ρ_C · L · C − C / τ_C
+    </div>
+  </div>
+
+  <!-- Panel derecho: gráfico -->
+  <div class="panel">
+    <div class="panel-title">— Evolución temporal</div>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#e24b4a"></div>
+        L(t) — células leucémicas
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#4a90d9"></div>
+        C(t) — células CAR-T
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="chart" width="625" height="375" style="display: block; box-sizing: border-box; height: 300px; width: 500px;"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Proyecto Aplicado 1 · Oncología Matemática · Prof. Dr. Eligio Colmenares · Semestre I-2026
+</footer>
+
+<script>
+  const DEFAULTS = { rhoL:0.20, alpha:1.0, rhoC:1.0, tauC:20, L0:5.0, C0:5.0 };
+  const TMAX=30, DT=0.05, STEPS=TMAX/DT;
+
+  function rk4(L, C, p) {
+    const dL = (l,c) => p.rhoL*l - p.alpha*c*l;
+    const dC = (l,c) => p.rhoC*l*c - c/p.tauC;
+    const k1l=dL(L,C),   k1c=dC(L,C);
+    const k2l=dL(L+DT/2*k1l, C+DT/2*k1c), k2c=dC(L+DT/2*k1l, C+DT/2*k1c);
+    const k3l=dL(L+DT/2*k2l, C+DT/2*k2c), k3c=dC(L+DT/2*k2l, C+DT/2*k2c);
+    const k4l=dL(L+DT*k3l,   C+DT*k3c),   k4c=dC(L+DT*k3l,   C+DT*k3c);
+    return [
+      Math.max(0, L + DT/6*(k1l+2*k2l+2*k3l+k4l)),
+      Math.max(0, C + DT/6*(k1c+2*k2c+2*k3c+k4c))
+    ];
+  }
+
+  function simulate(p) {
+    let L=p.L0*1e10, C=p.C0*1e7;
+    const tArr=[], Larr=[], Carr=[];
+    for (let i=0; i<=STEPS; i++) {
+      if (i%2===0) {
+        tArr.push(+(i*DT).toFixed(2));
+        Larr.push(L<1 ? null : L);
+        Carr.push(C<1 ? null : C);
+      }
+      [L,C] = rk4(L, C, {...p, alpha:p.alpha*1e-11, rhoC:p.rhoC*1e-11});
+      if (!isFinite(L)||!isFinite(C)) { L=0; C=0; }
+    }
+    return { tArr, Larr, Carr, Lfin:L, Cfin:C };
+  }
+
+  function sup(n) {
+    const sc='⁰¹²³⁴⁵⁶⁷⁸⁹'; let r='';
+    for (const c of ''+n) r += c==='-' ? '⁻' : sc[+c];
+    return r;
+  }
+
+  function fmtSci(v) {
+    if (v<1) return '<1';
+    const e = Math.floor(Math.log10(v));
+    return (v/Math.pow(10,e)).toFixed(1)+'×10'+sup(e);
+  }
+
+  const ctx = document.getElementById('chart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [
+        { label:'L(t)', data:[], borderColor:'#e24b4a', backgroundColor:'rgba(226,75,74,0.08)',
+          borderWidth:2, pointRadius:0, tension:0.3, fill:true, spanGaps:false },
+        { label:'C(t)', data:[], borderColor:'#4a90d9', backgroundColor:'rgba(74,144,217,0.08)',
+          borderWidth:2, pointRadius:0, tension:0.3, fill:true, borderDash:[5,3], spanGaps:false }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 150 },
+      interaction: { mode:'index', intersect:false },
+      plugins: {
+        legend: { display:false },
+        tooltip: {
+          backgroundColor: '#1c1e21',
+          borderColor: '#3a3d44',
+          borderWidth: 1,
+          titleColor: '#a0a89e',
+          bodyColor: '#e2e0dc',
+          callbacks: {
+            label: (c) => {
+              const v = c.raw;
+              return v===null
+                ? ' '+c.dataset.label+': eliminada'
+                : ' '+c.dataset.label+': '+fmtSci(v)+' cél';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'linear', min:0, max:30,
+          title: { display:true, text:'tiempo (días)', color:'#7a7874', font:{size:11} },
+          ticks: { color:'#7a7874', font:{size:10}, stepSize:5,
+                   callback: (v) => Number.isInteger(v) ? v : '' },
+          grid: { color:'rgba(255,255,255,0.05)' }
+        },
+        y: {
+          type: 'logarithmic', min:1,
+          title: { display:true, text:'número de células (escala log)', color:'#7a7874', font:{size:11} },
+          ticks: {
+            color:'#7a7874', font:{size:10},
+            callback: (v) => {
+              const l = Math.log10(v);
+              return Math.abs(l-Math.round(l))<1e-9 ? '10'+sup(Math.round(l)) : '';
+            }
+          },
+          grid: { color:'rgba(255,255,255,0.05)' }
+        }
+      }
+    }
+  });
+
+  function getParams() {
+    return {
+      rhoL:  +document.getElementById('rhoL').value,
+      alpha: +document.getElementById('alpha').value,
+      rhoC:  +document.getElementById('rhoC').value,
+      tauC:  +document.getElementById('tauC').value,
+      L0:    +document.getElementById('L0').value,
+      C0:    +document.getElementById('C0').value
+    };
+  }
+
+  function update() {
+    const p = getParams();
+    document.getElementById('rhoL-v').textContent  = p.rhoL.toFixed(2);
+    document.getElementById('alpha-v').textContent = p.alpha.toFixed(1);
+    document.getElementById('rhoC-v').textContent  = p.rhoC.toFixed(1);
+    document.getElementById('tauC-v').textContent  = p.tauC;
+    document.getElementById('L0-v').textContent    = p.L0.toFixed(1);
+    document.getElementById('C0-v').textContent    = p.C0.toFixed(1);
+
+    const { tArr, Larr, Carr, Lfin, Cfin } = simulate(p);
+    chart.data.labels = tArr;
+    chart.data.datasets[0].data = Larr;
+    chart.data.datasets[1].data = Carr;
+    chart.update();
+
+    const L0real = p.L0*1e10;
+    document.getElementById('Lfin').textContent = Lfin<1 ? '< 1 cél (elim.)' : fmtSci(Lfin)+' cél';
+    document.getElementById('Cfin').textContent = Cfin<1 ? '< 1 cél (elim.)' : fmtSci(Cfin)+' cél';
+
+    const ratio = Lfin/L0real;
+    const pct   = Math.max(0, Math.min(100, (1-ratio)*100));
+    const bar   = document.getElementById('outcome-bar');
+    const lbl   = document.getElementById('outcome-label');
+
+    if (Lfin<1) {
+      bar.style.background='#1baf7a'; bar.style.width='100%';
+      lbl.textContent='Respuesta completa: la leucemia fue eliminada';
+    } else if (ratio<0.1) {
+      bar.style.background='#eda100'; bar.style.width=Math.round(pct)+'%';
+      lbl.textContent='Respuesta parcial: reducción del '+Math.round((1-ratio)*100)+'%';
+    } else if (ratio<1) {
+      bar.style.background='#eb6834'; bar.style.width=Math.round(pct)+'%';
+      lbl.textContent='Reducción leve: '+Math.round((1-ratio)*100)+'% menos que L₀';
+    } else {
+      bar.style.background='#e24b4a'; bar.style.width='100%';
+      lbl.textContent='Sin control: leucemia creció '+Math.round(ratio)+'×';
+    }
+  }
+
+  function resetSliders() {
+    for (const [k,v] of Object.entries(DEFAULTS)) {
+      const el = document.getElementById(k);
+      if (el) el.value = v;
+    }
+    update();
+  }
+
+  document.querySelectorAll('input[type=range]').forEach(el => el.addEventListener('input', update));
+  update();
+</script>
+
+
+</body></html>
